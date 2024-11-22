@@ -33,7 +33,9 @@ class UC_Event_manager_Deactivator
     public static function deactivate()
     {
         // Unregisters cpt events 
+        unregister_post_type('event');
         // Flush rewrites
+        flush_rewrite_rules();
     }
 
 }

@@ -33,7 +33,12 @@ class UC_Event_manager_Activator
     public static function activate()
     {
         // register custom post type events
+        $plugin = new UC_Event_Manager();
+        $plugin->register_post_type();
+
         // flush events from memory
+        flush_rewrite_rules();
     }
 
+   
 }

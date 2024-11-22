@@ -103,4 +103,8 @@ class UC_Event_Manager_Admin
 
     }
 
+    public function admin_notices() {
+        settings_errors('uc_event_manager');
+    }
+
 }
