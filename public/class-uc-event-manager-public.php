@@ -104,31 +104,33 @@ class UC_Event_manager_Public
 
     }
 
-    public function register_shortcodes() {
+    public function register_shortcodes()
+    {
         add_shortcode('uc_events', [$this, 'render_events']);
     }
 
-    public function render_events($atts = []) {
+    public function render_events($atts = [])
+    {
         // Parse any attributes passed to the shortcode
         $atts = shortcode_atts([
             'number' => 5, // Default: show 5 events
         ], $atts, 'uc_events');
-    
+
         // Query the events
         $query_args = [
-            'post_type'      => 'event',
+            'post_type' => 'wis_event',
             'posts_per_page' => $atts['number'],
-            'meta_key'       => '_uc_event_start_date',
-            'orderby'        => 'meta_value',
-            'order'          => 'ASC',
+            'meta_key' => '_uc_event_start_date',
+            'orderby' => 'meta_value',
+            'order' => 'ASC',
         ];
-    
+
         $events = new WP_Query($query_args);
-    
+
         if (!$events->have_posts()) {
             return '<p>No events found.</p>';
         }
-    
+
         // Build the HTML output
         $output = '<div class="uc-events-list">';
         while ($events->have_posts()) {
@@ -138,7 +140,7 @@ class UC_Event_manager_Public
             $start_time = get_post_meta(get_the_ID(), '_uc_event_start_time', true);
             $end_time = get_post_meta(get_the_ID(), '_uc_event_end_time', true);
             $location = get_post_meta(get_the_ID(), '_uc_event_location', true);
-    
+
             $output .= '<div class="uc-event">';
             $output .= '<h3>' . esc_html(get_the_title()) . '</h3>';
             $output .= '<p><strong>Start Date:</strong> ' . esc_html($start_date) . '</p>';
@@ -149,7 +151,7 @@ class UC_Event_manager_Public
         }
         wp_reset_postdata();
         $output .= '</div>';
-    
+
         return $output;
     }
 
